@@ -1,0 +1,28 @@
+version: "1"
+services:
+  mysql:
+    image: mysql:latest
+    volumes:
+      - my_sql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=DefaultPassword
+      - MYSQL_DATABASE=DefaultDb
+      - MYSQL_USER=DefaultUser
+      - MYSQL_PASSWORD=DefaultPassword
+
+  flask:
+    image: flask-demo
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=DefaultUser
+      - MYSQL_PASSWORD=DefaultPassword
+      - MYSQL_DATABASE=DefaultDb
+    ports:
+      - "8080:8080"
+
+volumes:
+  my_sql_data:
+
